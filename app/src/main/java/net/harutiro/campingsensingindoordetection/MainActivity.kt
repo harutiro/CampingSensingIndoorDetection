@@ -23,9 +23,11 @@ class MainActivity : AppCompatActivity() {
         //BLEの受信をする
         bleUtils.getBle(this,this){ beacons ->
 
+            val epochMillis = System.currentTimeMillis()
+
             Log.d(TAG,"端末数" + beacons.size.toString())
             beacons.forEach {
-                Log.d(TAG,it.bluetoothName + " , "+ it.distance.toString())
+                Log.d(TAG,"$epochMillis , ${it.id1} , ${it.bluetoothAddress} , ${it.bluetoothName} , ${it.distance} , ${it.rssi}")
             }
         }
     }
