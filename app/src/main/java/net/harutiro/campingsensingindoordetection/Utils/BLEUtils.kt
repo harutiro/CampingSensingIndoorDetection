@@ -19,8 +19,10 @@ class BLEUtils {
 
     // iBeaconのデータを認識するためのParserフォーマット
     val IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"
+    val mRegion = Region("unique-id-001", null, null, null)
 
 
+    var beaconManager :BeaconManager? = null
 
     fun getBle(
         context: Context,
@@ -48,14 +50,17 @@ class BLEUtils {
             //絞り込みをする部分
             //今回nullなので、全てを取得する。
             //id1:uuid id2:major id3:minor
-            val mRegion = Region("unique-id-001", null, null, null)
 
-            val beaconManager =  BeaconManager.getInstanceForApplication(context)
+            beaconManager =  BeaconManager.getInstanceForApplication(context)
             // Set up a Live Data observer so this Activity can get ranging callbacks
             // observer will be called each time the monitored regionState changes (inside vs. outside region)
-            beaconManager.getRegionViewModel(mRegion).rangedBeacons.observe(lifecycleOwner, rangingObserver)
-            beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(IBEACON_FORMAT))
-            beaconManager.startRangingBeacons(mRegion)
+            beaconManager?.getRegionViewModel(mRegion)?.rangedBeacons?.observe(lifecycleOwner, rangingObserver)
+            beaconManager?.beaconParsers?.add(BeaconParser().setBeaconLayout(IBEACON_FORMAT))
+            beaconManager?.startRangingBeacons(mRegion)
         }
+    }
+
+    fun stopBle(){
+        beaconManager?.stopRangingBeacons(mRegion)
     }
 }
