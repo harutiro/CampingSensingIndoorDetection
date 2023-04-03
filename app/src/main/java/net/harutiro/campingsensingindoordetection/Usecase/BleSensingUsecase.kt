@@ -41,7 +41,7 @@ class BleSensingUsecase(
 
                 Log.d(TAG,"$epochMillis , ${it.id1} , ${it.bluetoothAddress} , ${it.bluetoothName} , ${it.distance} , ${it.rssi}")
 
-                if(it.id1.toString() == "536108df-48d8-4db9-9ef0-156f7ddb4a54"){
+                if(it.id1.toString() == "e7d61ea3-f8dd-49c8-8f2f-f2484c07ac1b"){
                     graphUtils.setData(it.rssi.toFloat(),epochMillis.toInt())
                     otherFileStorage?.doLog(
                         RssiDataClass(epochMillis.toInt(),it.rssi),
