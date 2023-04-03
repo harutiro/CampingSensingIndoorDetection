@@ -47,4 +47,7 @@ dependencies {
 
     //easyPermission
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    //グラフ
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
