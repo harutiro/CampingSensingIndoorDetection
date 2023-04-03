@@ -15,6 +15,7 @@ class BleSensingUsecase(
     private val context: Context,
     private val lifecycleOwner:LifecycleOwner,
     private var graphUtils: GraphUtils,
+    private val date:String
 ) {
 
     private val bleUtils = BLEUtils()
@@ -43,7 +44,8 @@ class BleSensingUsecase(
                 if(it.id1.toString() == "536108df-48d8-4db9-9ef0-156f7ddb4a54"){
                     graphUtils.setData(it.rssi.toFloat(),epochMillis.toInt())
                     otherFileStorage?.doLog(
-                        RssiDataClass(epochMillis.toInt(),it.rssi)
+                        RssiDataClass(epochMillis.toInt(),it.rssi),
+                        date
                     )
                 }
             }
@@ -54,7 +56,7 @@ class BleSensingUsecase(
     fun stop(){
         isSensing = false
 
-        otherFileStorage?.close()
+        otherFileStorage?.close(date)
         otherFileStorage = null
 
         bleUtils.stopBle()

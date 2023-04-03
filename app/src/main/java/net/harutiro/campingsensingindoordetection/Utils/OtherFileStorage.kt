@@ -13,7 +13,7 @@ class OtherFileStorage(private val context: Context){
 
     val fileAppend : Boolean = true //true=追記, false=上書き
     var fileName : String = "SensorLog.csv"
-    val filePath: String = context.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString().plus("/").plus(fileName) //内部ストレージのDocumentのURL
+    val filePath: String = context.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString().plus("/") //内部ストレージのDocumentのURL
 
 
     val tmpDataList = mutableListOf<RssiDataClass>()
@@ -35,12 +35,12 @@ class OtherFileStorage(private val context: Context){
         tmpDataList.clear()
     }
 
-    fun doLog(data:RssiDataClass) {
+    fun doLog(data:RssiDataClass,date:String) {
 
         tmpDataList.add(data)
 
         if(tmpDataList.size >= 10 ){
-            openFile(filePath)
+            openFile(filePath.plus(date).plus(fileName))
 
             tmpDataList.forEach() { item ->
                 val text = "${item.time},${item.rssi}"
@@ -51,9 +51,9 @@ class OtherFileStorage(private val context: Context){
         }
     }
 
-    fun close(){
+    fun close(date: String){
 
-        openFile(filePath)
+        openFile(filePath.plus(date).plus(fileName))
 
         tmpDataList.forEach() { item ->
             val text = "${item.time},${item.rssi}"

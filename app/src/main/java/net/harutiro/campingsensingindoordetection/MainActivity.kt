@@ -8,10 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
 import net.harutiro.campingsensingindoordetection.Entity.RssiDataClass
 import net.harutiro.campingsensingindoordetection.Usecase.BleSensingUsecase
-import net.harutiro.campingsensingindoordetection.Utils.BLEUtils
-import net.harutiro.campingsensingindoordetection.Utils.GraphUtils
-import net.harutiro.campingsensingindoordetection.Utils.OtherFileStorage
-import net.harutiro.campingsensingindoordetection.Utils.PermissionUtils
+import net.harutiro.campingsensingindoordetection.Utils.*
+import java.util.Date
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +36,8 @@ class MainActivity : AppCompatActivity() {
                 bleSensingUsecase = BleSensingUsecase(
                     this,
                     this,
-                    getGraph()
+                    getGraph(),
+                    DateUtils().getNowDate().toString()
                 )
 
                 bleSensingUsecase?.start()
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    
+
     fun getGraph(): GraphUtils {
         val graphUtils = GraphUtils(mChart!!)
         graphUtils.init()
