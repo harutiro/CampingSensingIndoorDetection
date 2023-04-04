@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
         //グラフの設定
         mChart = findViewById(R.id.line_chart)
 
-
-
         findViewById<Switch>(R.id.SensingStartSwitch).setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 //センシングの準備
@@ -42,27 +40,20 @@ class MainActivity : AppCompatActivity() {
 
                 bleSensingUsecase?.start()
 
-
             }else{
                 bleSensingUsecase?.stop()
                 bleSensingUsecase = null
             }
         }
     }
-
     fun getGraph(): GraphUtils {
         val graphUtils = GraphUtils(mChart!!)
         graphUtils.init()
 
         return graphUtils
     }
-
     override fun onDestroy() {
         super.onDestroy()
-
         bleSensingUsecase?.stop()
-
     }
-
-
 }
