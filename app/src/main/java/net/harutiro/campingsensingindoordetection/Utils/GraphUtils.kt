@@ -1,6 +1,5 @@
 package net.harutiro.campingsensingindoordetection.Utils
 
-import android.graphics.Color
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -8,13 +7,18 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import net.harutiro.campingsensingindoordetection.Entity.RssiDataClass
 
 class GraphUtils(val mChart:LineChart) {
 
-    var firstTime = 0
-    var index = 0
+    private var firstTime = 0
+    private val lineDataSets: MutableList<ILineDataSet> = mutableListOf()
 
-    fun init(){
+    init {
+        setupChart()
+    }
+
+    private fun setupChart() {
         // Grid背景色
         mChart.setDrawGridBackground(true)
 
@@ -39,31 +43,33 @@ class GraphUtils(val mChart:LineChart) {
         mChart.axisRight?.isEnabled = false
     }
 
-    val entryList = mutableListOf<Entry>()
+    fun clearData() {
+        lineDataSets.clear()
+        updateChart()
+    }
 
-
-    fun setData(value:Float , time:Int) {
-        // Entry()を使ってLineDataSetに設定できる形に変更してarrayを新しく作成
-        if(firstTime == 0){
-            firstTime = time
+    fun setData(values: MutableList<RssiDataClass>, label: String, color: Int) {
+        if (firstTime == 0) {
+            firstTime = values[0].time
         }
 
-        entryList.add(
-            Entry(((time-firstTime)/1000).toFloat(),value)
-        )
+        val entries: List<Entry> = values.mapIndexed { index, value ->
+            Entry(((value.time - firstTime) / 1000).toFloat(), value.rssi.toFloat())
+        }
 
-        val lineDataSet = LineDataSet(entryList,"RSSI")
-        lineDataSet.color = Color.BLUE
+        val lineDataSet = LineDataSet(entries, label)
+        lineDataSet.color = color
 
-        val lineDataSets = mutableListOf<ILineDataSet>(lineDataSet)
+        lineDataSets.add(lineDataSet)
 
+        updateChart()
+    }
+
+    fun updateChart() {
         val lineData = LineData(lineDataSets)
-
         mChart.data = lineData
 
         mChart.invalidate()
         mChart.notifyDataSetChanged()
-
-
     }
 }

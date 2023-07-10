@@ -12,7 +12,7 @@ import java.io.PrintWriter
 class OtherFileStorage(private val context: Context){
 
     val fileAppend : Boolean = true //true=追記, false=上書き
-    var fileName : String = "SensorLog.csv"
+    var fileName : String = "BLESensorLog.csv"
     val filePath: String = context.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString().plus("/") //内部ストレージのDocumentのURL
 
 

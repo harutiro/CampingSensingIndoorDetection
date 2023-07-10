@@ -2,6 +2,7 @@ package net.harutiro.campingsensingindoordetection
 
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //スリープにさせないコード
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         //最初のパーミッションの許可を行う
         permissionUtils.requestPermissions(this)
 
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                     this,
                     this,
                     getGraph(),
-                    DateUtils().getNowDate().toString()
+                    DateUtils.getNowDate()
                 )
 
                 bleSensingUsecase?.start()
@@ -48,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     }
     fun getGraph(): GraphUtils {
         val graphUtils = GraphUtils(mChart!!)
-        graphUtils.init()
 
         return graphUtils
     }
