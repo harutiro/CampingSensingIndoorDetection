@@ -49,13 +49,13 @@ class BleSensingUsecase(
 
                 if(it.id1.toString() == "e7d61ea3-f8dd-49c8-8f2f-f2484c07acaa"){
 
-                    entryListIsu.add(RssiDataClass(epochMillis.toInt(),it.rssi))
+//                    entryListIsu.add(RssiDataClass(epochMillis.toInt(),it.rssi))
 
-                    graphUtils.setData(
-                        entryListIsu,
-                        "椅子",
-                        Color.BLUE
-                    )
+//                    graphUtils.setData(
+//                        entryListIsu,
+//                        "椅子",
+//                        Color.BLUE
+//                    )
                     otherFileStorage1?.doLog(
                         RssiDataClass(epochMillis.toInt(),it.rssi),
                         date
@@ -64,13 +64,13 @@ class BleSensingUsecase(
 
                 if(it.id1.toString() == "e7d61ea3-f8dd-49c8-8f2f-f2484c07acbb"){
 
-                    entryListTent.add(RssiDataClass(epochMillis.toInt(),it.rssi))
+//                    entryListTent.add(RssiDataClass(epochMillis.toInt(),it.rssi))
 
-                    graphUtils.setData(
-                        entryListTent,
-                        "テント",
-                        Color.RED
-                    )
+//                    graphUtils.setData(
+//                        entryListTent,
+//                        "テント",
+//                        Color.RED
+//                    )
 
                     otherFileStorage2?.doLog(
                         RssiDataClass(epochMillis.toInt(),it.rssi),
